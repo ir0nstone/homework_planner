@@ -1,16 +1,16 @@
-# untitled
+# Homework Planner
 
-A new Flutter project.
+This app is a **Homework Planner** I created to teach myself some Dart/Flutter development, which may come in handy in the future. Intended features include:
 
-## Getting Started
+* adding homework
+* marking homework as done
+* notifications the day before the homework is due
+* sorting homework by date due and subject
+* helpful and decent-looking display of subject, title, description and teacher for each homework upon selection
 
-This project is a starting point for a Flutter application.
+If I feel adventurous, I may add the following:
+* file attachments for worksheets
+* ability to take photos within the app and save them as part of the homework
+* ability to view said photos from within the app
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Statistically speaking, this will not come to fruition, but ultimately the overall desire is to learn some cross-platform mobile application development by creating something useful. This is not by any means the _best_ solution for a homework planner - really, it's the bare minimum - but it's a practise project, after all.
