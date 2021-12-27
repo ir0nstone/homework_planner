@@ -1,78 +1,92 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import 'new_prep.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() async {
+import 'new_hwk.dart';
+import 'models/homework_model.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Hive.initFlutter();
+  Hive.registerAdapter(HomeworkAdapter());
+
   runApp(const MaterialApp(
-    home: ViewPrep(),
+    home: ViewHwk(),
   ));
 }
 
-class ViewPrep extends StatefulWidget {
-  const ViewPrep({Key? key}) : super(key: key);
+class ViewHwk extends StatefulWidget {
+  const ViewHwk({Key? key}) : super(key: key);
 
   @override
-  ViewPrepState createState() {
-    return ViewPrepState();
+  ViewHwkState createState() {
+    return ViewHwkState();
   }
 }
 
-class ViewPrepState extends State<ViewPrep> {
-  String prepTitle = '';
+class ViewHwkState extends State<ViewHwk> {
+  List<dynamic> getHomeworks() {
+    Hive.openBox('homework');
+    final box = Hive.box('homework');
+    return box.values.toList();
+  }
 
   @override
   Widget build(BuildContext context) {
-    SharedPreferences.getInstance().then((prefs) => {
-      setState(() {
-        prepTitle = prefs.getString('title') ?? '';
-      })
-    });
+    final hwks = getHomeworks();
+    String info = '';
+
+    for (Homework hwk in hwks) {
+      info += hwk.toString();
+    }
 
     Text title = Text(
-      'Homework: ' + prepTitle,
+      'Homework: ' + info,
       textAlign: TextAlign.left,
       style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
     );
 
-    ElevatedButton newPrep = ElevatedButton(
-      child: const Text('New Prep'),
+    ElevatedButton newHwkButton = ElevatedButton(
+      child: const Text('New Homework'),
       onPressed: () {
         Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const NewPrep())
+            MaterialPageRoute(builder: (context) => const NewHwk())
         );
       },
     );
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Prep Diary'),
+        title: const Text('Homework Planner'),
       ),
       body: Column(
         children: [
           title,
-          newPrep
+          newHwkButton
         ],
       ),
     );
   }
 }
 
-class NewPrep extends StatelessWidget {
-  const NewPrep({Key? key}) : super(key: key);
+class NewHwk extends StatelessWidget {
+  const NewHwk({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Prep Diary',
+      title: 'Homework Planner',
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('New Prep'),
+          title: const Text('New Homework'),
         ),
         body: Column(
           children: const [
-            NewPrepForm()
+            NewHwkForm()
           ],
         ),
       ),

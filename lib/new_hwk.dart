@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class NewPrepForm extends StatefulWidget {
-  const NewPrepForm({Key? key}) : super(key: key);
+import 'package:hive/hive.dart';
+
+import 'models/homework_model.dart';
+
+class NewHwkForm extends StatefulWidget {
+  const NewHwkForm({Key? key}) : super(key: key);
 
   @override
-  NewPrepFormState createState() {
-    return NewPrepFormState();
+  NewHwkFormState createState() {
+    return NewHwkFormState();
   }
 }
 
-class NewPrepFormState extends State<NewPrepForm> {
+class NewHwkFormState extends State<NewHwkForm> {
   // Create a global key that uniquely identifies the Form widget
   // and allows validation of the form.
   final _formKey = GlobalKey<FormState>();
@@ -21,7 +24,7 @@ class NewPrepFormState extends State<NewPrepForm> {
 
   DateTime selectedDate = DateTime.now();
 
-  Future<void> _selectDate(BuildContext context) async {
+  _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
@@ -33,6 +36,13 @@ class NewPrepFormState extends State<NewPrepForm> {
         selectedDate = picked;
       });
     }
+  }
+
+  // TODO refactor out?
+  addHomework(Homework hwk) async {
+    Hive.openBox('homework');
+    var box = Hive.box('homework');
+    box.add(hwk);
   }
 
   @override
@@ -99,8 +109,14 @@ class NewPrepFormState extends State<NewPrepForm> {
                 const SnackBar(content: Text('Saving Homework...')),
               );
 
-              SharedPreferences prefs = await SharedPreferences.getInstance();
-              prefs.setString('title', titleController.text);
+              Homework hwk = Homework(
+                  title: titleController.text,
+                  description: descController.text,
+                  subject: subjectController.text,
+                  dueDate: selectedDate
+              );
+
+              addHomework(hwk);
             },
             child: const Text('Submit'),
           ),
