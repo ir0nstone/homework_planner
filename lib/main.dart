@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -29,13 +30,37 @@ class ViewHwk extends StatefulWidget {
 }
 
 class ViewHwkState extends State<ViewHwk> {
+  Container packHomework(Homework hwk) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 100,
+            child: Text(
+              hwk.subject,
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
+          ),
+          SizedBox(
+            width: 150,
+            child: Text(
+              hwk.title,
+            ),
+          ),
+          Text(DateFormat('dd/MM/yyyy').format(hwk.dueDate)),
+        ],
+      )
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final hwks = DBManager.getHomeworks();
-    String info = '';
+    List<Container> hwkEntries = <Container>[];
 
     for (Homework hwk in hwks) {
-      info += hwk.toString();
+      hwkEntries.add(packHomework(hwk));
     }
 
     Text title = const Text(
@@ -44,9 +69,8 @@ class ViewHwkState extends State<ViewHwk> {
       style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
     );
 
-    Text homeworks = Text(
-      info,
-      textAlign: TextAlign.left
+    Column homeworks = Column(
+      children: hwkEntries,
     );
 
     ElevatedButton newHwkButton = ElevatedButton(
