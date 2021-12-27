@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 import 'package:hive/hive.dart';
@@ -7,11 +5,14 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'new_hwk.dart';
 import 'models/homework_model.dart';
+import 'models/model_manager.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Hive.initFlutter();
   Hive.registerAdapter(HomeworkAdapter());
+
+  Hive.openBox('homework');
 
   runApp(const MaterialApp(
     home: ViewHwk(),
@@ -28,25 +29,24 @@ class ViewHwk extends StatefulWidget {
 }
 
 class ViewHwkState extends State<ViewHwk> {
-  List<dynamic> getHomeworks() {
-    Hive.openBox('homework');
-    final box = Hive.box('homework');
-    return box.values.toList();
-  }
-
   @override
   Widget build(BuildContext context) {
-    final hwks = getHomeworks();
+    final hwks = DBManager.getHomeworks();
     String info = '';
 
     for (Homework hwk in hwks) {
       info += hwk.toString();
     }
 
-    Text title = Text(
-      'Homework: ' + info,
+    Text title = const Text(
+      'Homework:',
       textAlign: TextAlign.left,
-      style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
+      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
+    );
+
+    Text homeworks = Text(
+      info,
+      textAlign: TextAlign.left
     );
 
     ElevatedButton newHwkButton = ElevatedButton(
@@ -55,7 +55,7 @@ class ViewHwkState extends State<ViewHwk> {
         Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const NewHwk())
-        );
+        ).then((_) => setState(() {}));
       },
     );
 
@@ -66,6 +66,7 @@ class ViewHwkState extends State<ViewHwk> {
       body: Column(
         children: [
           title,
+          homeworks,
           newHwkButton
         ],
       ),
@@ -78,9 +79,7 @@ class NewHwk extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Homework Planner',
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: const Text('New Homework'),
         ),
@@ -89,7 +88,6 @@ class NewHwk extends StatelessWidget {
             NewHwkForm()
           ],
         ),
-      ),
     );
   }
 }

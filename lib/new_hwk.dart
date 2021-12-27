@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:hive/hive.dart';
-
 import 'models/homework_model.dart';
+import 'models/model_manager.dart';
 
 class NewHwkForm extends StatefulWidget {
   const NewHwkForm({Key? key}) : super(key: key);
@@ -36,13 +35,6 @@ class NewHwkFormState extends State<NewHwkForm> {
         selectedDate = picked;
       });
     }
-  }
-
-  // TODO refactor out?
-  addHomework(Homework hwk) async {
-    Hive.openBox('homework');
-    var box = Hive.box('homework');
-    box.add(hwk);
   }
 
   @override
@@ -105,10 +97,6 @@ class NewHwkFormState extends State<NewHwkForm> {
             onPressed: () async {
               if (!_formKey.currentState!.validate()) return;
 
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Saving Homework...')),
-              );
-
               Homework hwk = Homework(
                   title: titleController.text,
                   description: descController.text,
@@ -116,7 +104,9 @@ class NewHwkFormState extends State<NewHwkForm> {
                   dueDate: selectedDate
               );
 
-              addHomework(hwk);
+              DBManager.addHomework(hwk);
+
+              Navigator.pop(context);
             },
             child: const Text('Submit'),
           ),

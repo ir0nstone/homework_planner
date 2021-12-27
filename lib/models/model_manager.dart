@@ -1,20 +1,19 @@
-import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 import 'homework_model.dart';
 
-class DBManager with ChangeNotifier {
-  String boxName = 'homework';
-  List _hwkList = <Homework>[];
-  List get hwkList => _hwkList;
+class DBManager {
+  static const String hwkBoxName = 'homework';
 
-  addHomework(Homework hwk) async {
-    var box = await Hive.openBox<Homework>(boxName);
+  static addHomework(Homework hwk) {
+    Hive.openBox(hwkBoxName);
+    var box = Hive.box(hwkBoxName);
     box.add(hwk);
   }
 
-  listHomeworks() async {
-    final box = await Hive.openBox<Homework>(boxName);
-    _hwkList = box.values.toList();
+  static List<dynamic> getHomeworks() {
+    Hive.openBox(hwkBoxName);
+    final box = Hive.box(hwkBoxName);
+    return box.values.toList();
   }
 }
