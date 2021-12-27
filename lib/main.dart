@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'new_hwk.dart';
+import 'view_hwk.dart';
 import 'models/homework_model.dart';
 import 'models/model_manager.dart';
 
-Future<void> main() async {
+main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Hive.initFlutter();
+  await Hive.initFlutter();
   Hive.registerAdapter(HomeworkAdapter());
 
-  Hive.openBox('homework');
+  await Hive.openBox('homework');
 
   runApp(const MaterialApp(
     home: ViewHwk(),
@@ -34,7 +34,12 @@ class ViewHwkState extends State<ViewHwk> {
     return Container(
       padding: EdgeInsets.all(20),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => ViewHwkInfo(hwk))
+          ).then((_) => setState(() {}));
+        },
         child: Row(
           children: [
             SizedBox(
@@ -52,7 +57,7 @@ class ViewHwkState extends State<ViewHwk> {
               ),
             ),
             Text(
-              DateFormat('dd/MM/yyyy').format(hwk.dueDate),
+              hwk.formattedDate,
               style: const TextStyle(fontSize: 18),
             ),
           ],

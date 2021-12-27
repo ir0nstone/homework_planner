@@ -6,13 +6,16 @@ class DBManager {
   static const String hwkBoxName = 'homework';
 
   static addHomework(Homework hwk) {
-    Hive.openBox(hwkBoxName);
     var box = Hive.box(hwkBoxName);
     box.add(hwk);
   }
 
+  static deleteHomework(Homework hwk) {
+    var box = Hive.box(hwkBoxName);
+    box.delete(hwk);
+  }
+
   static List<dynamic> getHomeworks() {
-    Hive.openBox(hwkBoxName);
     final box = Hive.box(hwkBoxName);
     return box.values.toList();
   }

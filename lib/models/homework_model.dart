@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 
 part 'homework_model.g.dart';
 
@@ -16,8 +17,7 @@ class Homework {
     required this.dueDate
   });
 
-  @override
-  String toString() {
-    return 'Title: $title';
+  String get formattedDate {
+    return DateFormat('dd/MM/yyyy').format(dueDate);
   }
 }
