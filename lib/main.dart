@@ -9,26 +9,40 @@ void main() async {
   ));
 }
 
-class ViewPrep extends StatelessWidget {
+class ViewPrep extends StatefulWidget {
   const ViewPrep({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  ViewPrepState createState() {
+    return ViewPrepState();
+  }
+}
 
-    Text title = const Text(
-      'Homework:',
+class ViewPrepState extends State<ViewPrep> {
+  String prepTitle = '';
+
+  @override
+  Widget build(BuildContext context) {
+    SharedPreferences.getInstance().then((prefs) => {
+      setState(() {
+        prepTitle = prefs.getString('title') ?? '';
+      })
+    });
+
+    Text title = Text(
+      'Homework: ' + prepTitle,
       textAlign: TextAlign.left,
-      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
+      style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
     );
 
     ElevatedButton newPrep = ElevatedButton(
-        child: const Text('New Prep'),
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const NewPrep())
-          );
-        },
+      child: const Text('New Prep'),
+      onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const NewPrep())
+        );
+      },
     );
 
     return Scaffold(
