@@ -16,6 +16,24 @@ class NewPrepFormState extends State<NewPrepForm> {
   final _formKey = GlobalKey<FormState>();
 
   final titleController = TextEditingController();
+  final descController = TextEditingController();
+  final subjectController = TextEditingController();
+
+  DateTime selectedDate = DateTime.now();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime.now(),
+        lastDate: DateTime(2100)
+    );
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +67,7 @@ class NewPrepFormState extends State<NewPrepForm> {
               }
               return null;
             },
+            controller: descController,
           ),
 
           // Subject
@@ -62,19 +81,13 @@ class NewPrepFormState extends State<NewPrepForm> {
               }
               return null;
             },
+            controller: subjectController,
           ),
 
-          // Due Date
-          TextFormField(
-            decoration: const InputDecoration(
-              labelText: 'Due Date',
-            ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
-            },
+          // Input Date Button
+          ElevatedButton(
+            child: const Text('Set Due Date'),
+            onPressed: () => _selectDate(context),
           ),
 
           // Submit Button
