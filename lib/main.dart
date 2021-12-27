@@ -32,24 +32,31 @@ class ViewHwk extends StatefulWidget {
 class ViewHwkState extends State<ViewHwk> {
   Container packHomework(Homework hwk) {
     return Container(
-      padding: const EdgeInsets.all(20),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 100,
-            child: Text(
-              hwk.subject,
-              style: const TextStyle(fontWeight: FontWeight.w600),
+      padding: EdgeInsets.all(20),
+      child: InkWell(
+        onTap: () {},
+        child: Row(
+          children: [
+            SizedBox(
+              width: 100,
+              child: Text(
+                hwk.subject,
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              ),
             ),
-          ),
-          SizedBox(
-            width: 150,
-            child: Text(
-              hwk.title,
+            SizedBox(
+              width: 150,
+              child: Text(
+                hwk.title,
+                style: const TextStyle(fontSize: 18)
+              ),
             ),
-          ),
-          Text(DateFormat('dd/MM/yyyy').format(hwk.dueDate)),
-        ],
+            Text(
+              DateFormat('dd/MM/yyyy').format(hwk.dueDate),
+              style: const TextStyle(fontSize: 18),
+            ),
+          ],
+        )
       )
     );
   }
@@ -63,10 +70,13 @@ class ViewHwkState extends State<ViewHwk> {
       hwkEntries.add(packHomework(hwk));
     }
 
-    Text title = const Text(
-      'Homework:',
-      textAlign: TextAlign.left,
-      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
+    Container title = Container(
+      padding: const EdgeInsets.all(20),
+      child: const Text(
+        'Homework:',
+        textAlign: TextAlign.left,
+        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
+      )
     );
 
     Column homeworks = Column(
