@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'notification_service.dart';
 import 'models/homework_model.dart';
 import 'models/model_manager.dart';
 
@@ -105,6 +106,17 @@ class NewHwkFormState extends State<NewHwkForm> {
               );
 
               DBManager.addHomework(hwk);
+
+              // schedule notification
+              String title = hwk.title + ' Homework Due!';
+              String description = 'You have homework due tomorrow!';
+
+              // default datetime is midnight, which is great
+              // want it at 8am the day before
+              DateTime notifTime = hwk.dueDate.add(const Duration(days: -1, hours: 8));
+              Duration duration = notifTime.difference(DateTime.now());
+
+              NotificationService().scheduleNotification(title, description, duration);
 
               Navigator.pop(context);
             },

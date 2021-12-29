@@ -5,11 +5,13 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'new_hwk.dart';
 import 'view_hwk.dart';
+import 'notification_service.dart';
 import 'models/homework_model.dart';
 import 'models/model_manager.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService().init();
   await Hive.initFlutter();
   Hive.registerAdapter(HomeworkAdapter());
 
