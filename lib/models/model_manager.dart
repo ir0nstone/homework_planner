@@ -5,14 +5,14 @@ import 'homework_model.dart';
 class DBManager {
   static const String hwkBoxName = 'homework';
 
-  static addHomework(Homework hwk) {
+  static addHomework(Homework hwk) async {
     var box = Hive.box(hwkBoxName);
-    box.add(hwk);
+    await box.add(hwk);
   }
 
-  static deleteHomework(Homework hwk) {
+  static deleteHomework(int idx) async {
     var box = Hive.box(hwkBoxName);
-    box.delete(hwk);
+    await box.deleteAt(idx);
   }
 
   static List<dynamic> getHomeworks() {

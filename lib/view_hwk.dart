@@ -6,8 +6,9 @@ import 'models/model_manager.dart';
 
 class ViewHwkInfo extends StatelessWidget {
   final Homework hwk;
+  final int idx;
 
-  const ViewHwkInfo(this.hwk, {Key? key}) : super(key: key);
+  const ViewHwkInfo(this.idx, this.hwk, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class ViewHwkInfo extends StatelessWidget {
           ElevatedButton(
             child: const Text('Delete Homework'),
             onPressed: () {
-              DBManager.deleteHomework(hwk);
+              DBManager.deleteHomework(idx);
               Navigator.pop(context);
             },
           )

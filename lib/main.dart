@@ -30,14 +30,14 @@ class ViewHwk extends StatefulWidget {
 }
 
 class ViewHwkState extends State<ViewHwk> {
-  Container packHomework(Homework hwk) {
+  Container packHomework(int idx, Homework hwk) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: InkWell(
         onTap: () {
           Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => ViewHwkInfo(hwk))
+              MaterialPageRoute(builder: (_) => ViewHwkInfo(idx, hwk))
           ).then((_) => setState(() {}));
         },
         child: Row(
@@ -71,8 +71,8 @@ class ViewHwkState extends State<ViewHwk> {
     final hwks = DBManager.getHomeworks();
     List<Container> hwkEntries = <Container>[];
 
-    for (Homework hwk in hwks) {
-      hwkEntries.add(packHomework(hwk));
+    for (int i = 0; i < hwks.length; i++) {
+      hwkEntries.add(packHomework(i, hwks[i]));
     }
 
     Container title = Container(
