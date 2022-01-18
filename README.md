@@ -12,5 +12,3 @@ If I feel adventurous, I may add the following:
 * file attachments for worksheets
 * ability to take photos within the app and save them as part of the homework
 * ability to view said photos from within the app
-
-Statistically speaking, this will not come to fruition, but ultimately the overall desire is to learn some cross-platform mobile application development by creating something useful. This is not by any means the _best_ solution for a homework planner - really, it's the bare minimum - but it's a practise project, after all.
