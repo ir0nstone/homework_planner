@@ -4,6 +4,28 @@ import 'notification_service.dart';
 import 'models/homework_model.dart';
 import 'models/model_manager.dart';
 
+class NewHwk extends StatelessWidget {
+  const NewHwk({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('New Homework'),
+        ),
+        body: Column(
+          children: const [
+            NewHwkForm()
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add),
+          onPressed: () {},
+        )
+    );
+  }
+}
+
 class NewHwkForm extends StatefulWidget {
   const NewHwkForm({Key? key}) : super(key: key);
 
@@ -14,8 +36,6 @@ class NewHwkForm extends StatefulWidget {
 }
 
 class NewHwkFormState extends State<NewHwkForm> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
   final _formKey = GlobalKey<FormState>();
 
   final titleController = TextEditingController();

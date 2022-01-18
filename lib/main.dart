@@ -114,21 +114,3 @@ class ViewHwkState extends State<ViewHwk> {
     );
   }
 }
-
-class NewHwk extends StatelessWidget {
-  const NewHwk({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('New Homework'),
-        ),
-        body: Column(
-          children: const [
-            NewHwkForm()
-          ],
-        ),
-    );
-  }
-}
