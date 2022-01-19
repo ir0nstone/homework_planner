@@ -3,7 +3,11 @@ import 'package:hive/hive.dart';
 import 'homework_model.dart';
 
 class DBManager {
-  static const String hwkBoxName = 'homework';
+  static const String hwkBoxName = 'homework2';
+
+  static openHomeworkBox() async {
+    await Hive.openBox(hwkBoxName);
+  }
 
   static addHomework(Homework hwk) async {
     var box = Hive.box(hwkBoxName);

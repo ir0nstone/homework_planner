@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'notification_service.dart';
 import 'models/homework_model.dart';
 import 'models/model_manager.dart';
+import 'notification_service.dart';
+import 'take_photo.dart';
 
 class NewHwk extends StatelessWidget {
   const NewHwk({Key? key}) : super(key: key);
@@ -17,10 +18,6 @@ class NewHwk extends StatelessWidget {
           children: const [
             NewHwkForm()
           ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
-          onPressed: () {},
         )
     );
   }
@@ -30,9 +27,7 @@ class NewHwkForm extends StatefulWidget {
   const NewHwkForm({Key? key}) : super(key: key);
 
   @override
-  NewHwkFormState createState() {
-    return NewHwkFormState();
-  }
+  NewHwkFormState createState() => NewHwkFormState();
 }
 
 class NewHwkFormState extends State<NewHwkForm> {
@@ -43,6 +38,7 @@ class NewHwkFormState extends State<NewHwkForm> {
   final subjectController = TextEditingController();
 
   DateTime selectedDate = DateTime.now();
+  String imagePath = "";
 
   _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -113,16 +109,28 @@ class NewHwkFormState extends State<NewHwkForm> {
             onPressed: () => _selectDate(context),
           ),
 
+          // Add Image Button
+          ElevatedButton(
+            onPressed: () async {
+              imagePath = await Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const TakePictureScreen()),
+              );
+            },
+            child: const Text('Add Image'),
+          ),
+
           // Submit Button
           ElevatedButton(
             onPressed: () async {
               if (!_formKey.currentState!.validate()) return;
 
               Homework hwk = Homework(
-                  title: titleController.text,
-                  description: descController.text,
-                  subject: subjectController.text,
-                  dueDate: selectedDate
+                title: titleController.text,
+                description: descController.text,
+                subject: subjectController.text,
+                dueDate: selectedDate,
+                imagePath: imagePath
               );
 
               DBManager.addHomework(hwk);

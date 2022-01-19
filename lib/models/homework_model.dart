@@ -9,12 +9,14 @@ class Homework {
   @HiveField(1) final String description;
   @HiveField(2) final String subject;
   @HiveField(3) final DateTime dueDate;
+  @HiveField(4) final String imagePath;
 
   Homework({
     required this.title,
     required this.description,
     required this.subject,
-    required this.dueDate
+    required this.dueDate,
+    required this.imagePath
   });
 
   String get formattedDate {

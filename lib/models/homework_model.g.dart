@@ -21,13 +21,14 @@ class HomeworkAdapter extends TypeAdapter<Homework> {
       description: fields[1] as String,
       subject: fields[2] as String,
       dueDate: fields[3] as DateTime,
+      imagePath: fields[4] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Homework obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class HomeworkAdapter extends TypeAdapter<Homework> {
       ..writeByte(2)
       ..write(obj.subject)
       ..writeByte(3)
-      ..write(obj.dueDate);
+      ..write(obj.dueDate)
+      ..writeByte(4)
+      ..write(obj.imagePath);
   }
 
   @override

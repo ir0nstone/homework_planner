@@ -39,6 +39,14 @@ class ViewHwkInfo extends StatelessWidget {
                 style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600)
             ),
           ),
+          Container(
+            padding: const EdgeInsets.all(20),
+            alignment: Alignment.centerLeft,
+            child: Text(
+                'File Location: ' + hwk.imagePath,
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600)
+            ),
+          ),
           ElevatedButton(
             child: const Text('Delete Homework'),
             onPressed: () {

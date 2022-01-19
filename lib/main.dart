@@ -15,7 +15,7 @@ main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(HomeworkAdapter());
 
-  await Hive.openBox('homework');
+  await DBManager.openHomeworkBox();
 
   runApp(const MaterialApp(
     home: ViewHwk(),
@@ -95,7 +95,7 @@ class ViewHwkState extends State<ViewHwk> {
       onPressed: () {
         Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const NewHwk())
+            MaterialPageRoute(builder: (context) => NewHwk())
         ).then((_) => setState(() {}));
       },
     );
