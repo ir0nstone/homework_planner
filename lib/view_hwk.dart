@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -47,13 +49,16 @@ class ViewHwkInfo extends StatelessWidget {
                 style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600)
             ),
           ),
+
+          Image.file(File(hwk.imagePath), width: 100, height: 100),
+
           ElevatedButton(
             child: const Text('Delete Homework'),
             onPressed: () {
               DBManager.deleteHomework(idx);
               Navigator.pop(context);
             },
-          )
+          ),
         ],
       )
     );
