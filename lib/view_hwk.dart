@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:photo_view/photo_view.dart';
+
 import 'models/homework_model.dart';
 import 'models/model_manager.dart';
 
@@ -50,7 +52,11 @@ class ViewHwkInfo extends StatelessWidget {
             ),
           ),
 
-          Image.file(File(hwk.imagePath), width: 100, height: 100),
+          Expanded(
+              child: PhotoView(
+                  imageProvider: FileImage(File(hwk.imagePath), scale: 0.2)
+              ),
+          ),
 
           ElevatedButton(
             child: const Text('Delete Homework'),
